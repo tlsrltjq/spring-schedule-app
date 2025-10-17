@@ -10,7 +10,4 @@ public class CreateCommentRequest {
     private String comment;
     private String userName;
     private String password;
-    private Schedule schedule;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 }

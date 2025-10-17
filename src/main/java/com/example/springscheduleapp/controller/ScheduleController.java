@@ -38,7 +38,6 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    ///schedules/{scheduleId}?passward=123
     @DeleteMapping("/schedules")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId, @RequestBody GetPasswordRequest getPasswordRequest) {
         scheduleService.deleteSchedule(scheduleId, getPasswordRequest);

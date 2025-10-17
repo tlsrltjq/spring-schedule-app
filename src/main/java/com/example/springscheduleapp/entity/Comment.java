@@ -1,6 +1,5 @@
 package com.example.springscheduleapp.entity;
 
-import com.example.springscheduleapp.dto.GetScheduleResponse;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,6 +17,7 @@ public class Comment extends BaseEntity {
     private String userName;
     private String password;
     @ManyToOne
+    @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
     public Comment(String comment, String userName, String password, Schedule schedule) {
@@ -30,5 +30,9 @@ public class Comment extends BaseEntity {
     public void updateComment(String comment, String userName) {
         this.comment = comment;
         this.userName = userName;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

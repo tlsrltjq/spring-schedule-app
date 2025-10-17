@@ -5,6 +5,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name="schedules")
@@ -19,6 +22,8 @@ public class Schedule extends BaseEntity {
     private String userName;
     @Column(length = 20, nullable = false)
     private String password;
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> comments= new ArrayList<>(); //null pointer exception 방지
 
     public Schedule(String title, String content, String userName, String password) {
         this.title = title;
@@ -30,6 +35,16 @@ public class Schedule extends BaseEntity {
     public void updateSchedule(String title, String userName) {
         this.title = title;
         this.userName = userName;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setSchedule(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setSchedule(null);
     }
 
 }
