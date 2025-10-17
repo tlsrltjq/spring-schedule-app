@@ -27,11 +27,9 @@ public class Schedule extends BaseEntity {
         this.passward = passward;
     }
 
-    public void updateSchedule(String title, String content, String userName, String passward) {
+    public void updateSchedule(String title, String userName) {
         this.title = title;
-        this.content = content;
         this.userName = userName;
-        this.passward = passward;
     }
 
 }

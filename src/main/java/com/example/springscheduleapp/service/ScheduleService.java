@@ -1,8 +1,6 @@
 package com.example.springscheduleapp.service;
 
-import com.example.springscheduleapp.dto.CreateScheduleRequest;
-import com.example.springscheduleapp.dto.CreateScheduleResponse;
-import com.example.springscheduleapp.dto.GetScheduleResponse;
+import com.example.springscheduleapp.dto.*;
 import com.example.springscheduleapp.entity.Schedule;
 import com.example.springscheduleapp.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ public class ScheduleService {
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getUesrName(), request.getPassward());
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        return new CreateScheduleResponse(savedSchedule.getId(),savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUserName(), savedSchedule.getPassward(), savedSchedule.getCreatedAt(), savedSchedule.getModifiedAt());
+        return new CreateScheduleResponse(savedSchedule.getId(),savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUserName(), savedSchedule.getCreatedAt(), savedSchedule.getModifiedAt());
     }
 
     @Transactional(readOnly = true)
@@ -38,5 +36,15 @@ public class ScheduleService {
             result.add(new GetScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt()));
         }
         return result;
+    }
+
+    @Transactional
+    public UpdateScheduleResponse updateSchedule(Long scheduleId, String password, UpdateScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()->new IllegalStateException("Schedule not found!"));
+        if (!schedule.getPassward().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+        schedule.updateSchedule(request.getTitle(),request.getUesrName());
+        return new UpdateScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt());
     }
 }
