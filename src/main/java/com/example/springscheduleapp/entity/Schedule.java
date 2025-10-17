@@ -18,13 +18,13 @@ public class Schedule extends BaseEntity {
     private String content;
     private String userName;
     @Column(length = 20, nullable = false)
-    private String passward;
+    private String password;
 
-    public  Schedule(String title, String content, String userName, String passward) {
+    public Schedule(String title, String content, String userName, String password) {
         this.title = title;
         this.content = content;
         this.userName = userName;
-        this.passward = passward;
+        this.password = password;
     }
 
     public void updateSchedule(String title, String userName) {

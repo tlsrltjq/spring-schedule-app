@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 public class CreateScheduleRequest {
     private String title;
     private String content;
-    private String uesrName;
-    private String passward;
+    private String userName;
+    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }

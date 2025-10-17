@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Getter
 public class UpdateScheduleRequest {
     private String title;
-    private String uesrName;
-    private String passward;
+    private String userName;
+    private String password;
     private LocalDateTime modifiedAt;
 }

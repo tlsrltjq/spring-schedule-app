@@ -17,7 +17,7 @@ public class ScheduleService {
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
-        Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getUesrName(), request.getPassward());
+        Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getUserName(), request.getPassword());
         Schedule savedSchedule = scheduleRepository.save(schedule);
         return new CreateScheduleResponse(savedSchedule.getId(),savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUserName(), savedSchedule.getCreatedAt(), savedSchedule.getModifiedAt());
     }
@@ -41,17 +41,17 @@ public class ScheduleService {
     @Transactional
     public UpdateScheduleResponse updateSchedule(Long scheduleId, String password, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()->new IllegalStateException("Schedule not found!"));
-        if (!schedule.getPassward().equals(password)) {
+        if (!schedule.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
-        schedule.updateSchedule(request.getTitle(),request.getUesrName());
+        schedule.updateSchedule(request.getTitle(),request.getUserName());
         return new UpdateScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt());
     }
 
     @Transactional
     public void deleteSchedule(Long scheduleId, String password) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()->new IllegalStateException("Schedule not found!"));
-        if (!schedule.getPassward().equals(password)) {
+        if (!schedule.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
         scheduleRepository.deleteById(scheduleId);
