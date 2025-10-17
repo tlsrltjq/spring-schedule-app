@@ -47,4 +47,13 @@ public class ScheduleService {
         schedule.updateSchedule(request.getTitle(),request.getUesrName());
         return new UpdateScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt());
     }
+
+    @Transactional
+    public void deleteSchedule(Long scheduleId, String password) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()->new IllegalStateException("Schedule not found!"));
+        if (!schedule.getPassward().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+        scheduleRepository.deleteById(scheduleId);
+    }
 }

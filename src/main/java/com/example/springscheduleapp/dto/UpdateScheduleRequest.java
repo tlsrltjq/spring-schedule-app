@@ -8,5 +8,6 @@ import java.time.LocalDateTime;
 public class UpdateScheduleRequest {
     private String title;
     private String uesrName;
+    private String passward;
     private LocalDateTime modifiedAt;
 }
