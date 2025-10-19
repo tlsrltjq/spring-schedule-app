@@ -27,8 +27,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedules")
-    public ResponseEntity<List<GetScheduleResponse>> getAllSchedules() {
-        List<GetScheduleResponse> result = scheduleService.getAllSchedules();
+    public ResponseEntity<List<GetAllScheduleResponse>> getAllSchedules() {
+        List<GetAllScheduleResponse> result = scheduleService.getAllSchedules();
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
@@ -38,7 +38,7 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @DeleteMapping("/schedules")
+    @DeleteMapping("/schedules/{scheduleId}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId, @RequestBody GetPasswordRequest getPasswordRequest) {
         scheduleService.deleteSchedule(scheduleId, getPasswordRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

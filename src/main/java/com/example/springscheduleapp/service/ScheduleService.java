@@ -2,6 +2,7 @@ package com.example.springscheduleapp.service;
 
 import com.example.springscheduleapp.dto.*;
 import com.example.springscheduleapp.entity.Schedule;
+import com.example.springscheduleapp.repository.CommentRepository;
 import com.example.springscheduleapp.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,11 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
@@ -25,15 +28,27 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public GetScheduleResponse getOneSchdule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(()->new IllegalStateException("Schedule not found!"));
-        return new GetScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt());
+
+        //댓글 리스트 변환
+        List<GetCommentResponse> comments = schedule.getComments().stream()
+                .map(comment -> new GetCommentResponse(
+                        comment.getId(),
+                        comment.getComment(),
+                        comment.getUserName(),
+                        comment.getCreatedAt(),
+                        comment.getModifiedAt()
+                ))
+                .collect(Collectors.toList());
+
+        return new GetScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt(), comments);
     }
 
     @Transactional(readOnly = true)
-    public List<GetScheduleResponse> getAllSchedules() {
+    public List<GetAllScheduleResponse> getAllSchedules() {
         List<Schedule> schedules = scheduleRepository.findAll();
-        List<GetScheduleResponse> result = new ArrayList<>();
+        List<GetAllScheduleResponse> result = new ArrayList<>();
         for (Schedule schedule : schedules) {
-            result.add(new GetScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt()));
+            result.add(new GetAllScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getContent(),schedule.getUserName(),schedule.getCreatedAt(),schedule.getModifiedAt()));
         }
         return result;
     }

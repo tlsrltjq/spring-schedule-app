@@ -13,8 +13,11 @@ public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 100, nullable = false)
     private String comment;
+    @Column(nullable = false)
     private String userName;
+    @Column(nullable = false)
     private String password;
     @ManyToOne
     @JoinColumn(name = "schedule_id")
@@ -25,11 +28,6 @@ public class Comment extends BaseEntity {
         this.userName = userName;
         this.password = password;
         this.schedule = schedule;
-    }
-
-    public void updateComment(String comment, String userName) {
-        this.comment = comment;
-        this.userName = userName;
     }
 
     public void setSchedule(Schedule schedule) {

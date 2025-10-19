@@ -16,11 +16,13 @@ public class Schedule extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50, nullable = false)
+    @Column(length = 30, nullable = false)
     private String title;
-    private String content;
-    private String userName;
     @Column(length = 20, nullable = false)
+    private String content;
+    @Column(nullable = false)
+    private String userName;
+    @Column(nullable = false)
     private String password;
     @OneToMany(mappedBy = "schedule")
     private List<Comment> comments= new ArrayList<>(); //null pointer exception 방지
