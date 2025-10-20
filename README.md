@@ -18,11 +18,15 @@
 ---
 ## 🖼️ PostMan 실행 이미지
 <div>
-    <img src="./images/post.png" width="300">
-    <img src="./images/getAll.png" width="300">
+<img src="./images/post.png" width="500">
+<img src="./images/getAll.png" width="500">
 </div>
-<img src="./images/getOne.png">
-<img src="./images/patch.png">
-<img src="./images/delete.png">
-<img src="./images/postComment.png">
-<img src="./images/getComment.png">
+<div>
+<img src="./images/getOne.png" width="500">
+<img src="./images/patch.png" width="500">
+</div>
+<div>
+<img src="./images/delete.png" width="500">
+<img src="./images/postComment.png" width="500">
+</div>
+<img src="./images/getComment.png" width="500">
